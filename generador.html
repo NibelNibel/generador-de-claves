@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b16">
+<title>SEEDPASS // CRYPTO SYSTEM</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --cyan: #00f5ff;
+    --blue: #5277ff;
+    --purple: #a855f7;
+    --bg: #080b16;
+    --panel: rgba(17, 24, 44, .78);
+    --text: #e5f4ff;
+    --muted: #7386a8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 0%, #17274a 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, #21133d 0%, transparent 45%),
+        var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 22px;
+    overflow-x: hidden;
+}
+
+/* FONDO */
+
+.grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .13;
+    background-image:
+        linear-gradient(rgba(0,245,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,.12) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.glow {
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: .17;
+    pointer-events: none;
+}
+
+.glow.one {
+    background: var(--cyan);
+    top: 10%;
+    left: -100px;
+}
+
+.glow.two {
+    background: var(--purple);
+    bottom: 0;
+    right: -100px;
+}
+
+/* APLICACIÓN */
+
+.app {
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    z-index: 1;
+    background: var(--panel);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(0,245,255,.23);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow:
+        0 0 35px rgba(0,245,255,.07),
+        0 25px 80px rgba(0,0,0,.5);
+    overflow: hidden;
+}
+
+.app::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    width: 76%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--cyan);
+    text-shadow: 0 0 15px var(--cyan);
+}
+
+.version {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+}
+
+.system {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00ff9d;
+    box-shadow: 0 0 10px #00ff9d;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .3; }
+}
+
+/* TEXTO */
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 6px 0 27px;
+}
+
+/* INPUT */
+
+label {
+    display: block;
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    background: rgba(3,8,20,.8);
+    border: 1px solid #263d5c;
+    border-radius: 9px;
+    transition: .25s;
+}
+
+.input-box:focus-within {
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(0,245,255,.13);
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+}
+
+input::placeholder {
+    color: #53627c;
+}
+
+.eye {
+    background: transparent;
+    color: var(--cyan);
+    padding: 12px;
+    font-size: 18px;
+}
+
+/* BOTONES */
+
+button {
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    transition: .2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.generate {
+    width: 100%;
+    margin-top: 17px;
+    padding: 15px;
+    border: 1px solid var(--cyan);
+    border-radius: 9px;
+    color: #03121c;
+    background: linear-gradient(100deg, var(--cyan), #5aabff);
+    font-size: 15px;
+    letter-spacing: 2px;
+    box-shadow: 0 0 20px rgba(0,245,255,.17);
+}
+
+.generate:active {
+    transform: scale(.97);
+    box-shadow: 0 0 30px rgba(0,245,255,.4);
+}
+
+/* RESULTADO */
+
+.result {
+    position: relative;
+    margin-top: 25px;
+    padding: 18px;
+    background: rgba(3,8,20,.85);
+    border: 1px solid rgba(82,119,255,.35);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.result::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: var(--cyan);
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+.result.scanning::before {
+    animation: scan .7s linear;
+}
+
+@keyframes scan {
+    to { left: 100%; }
+}
+
+.result-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 13px;
+}
+
+.password {
+    font-family: monospace;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(0,245,255,.4);
+    min-height: 28px;
+}
+
+.copy {
+    width: 100%;
+    margin-top: 17px;
+    padding: 12px;
+    border-radius: 7px;
+    border: 1px solid #344e77;
+    background: #121f38;
+    color: #b4cfff;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.copy:active {
+    background: #203b61;
+}
+
+/* ESTADO */
+
+.status {
+    font-size: 12px;
+    color: #00ffae;
+    margin-top: 13px;
+    min-height: 17px;
+    letter-spacing: 1px;
+}
+
+/* FOOTER */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(100,150,200,.13);
+}
+
+.security {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.sound {
+    background: transparent;
+    color: var(--cyan);
+    border: 1px solid #29445c;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 11px;
+}
+
+.note {
+    text-align: center;
+    color: #53627c;
+    font-size: 11px;
+    margin-top: 18px;
+}
+
+/* ANIMACIÓN DE ENTRADA */
+
+.app {
+    animation: appear .7s ease-out;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width:380px) {
+    .app {
+        padding: 19px;
+    }
+
+    h1 {
+        font-size: 19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<main class="app">
+
+    <header class="header">
+        <div class="logo">SEED<span>PASS</span></div>
+        <div class="version">SYSTEM V1.0</div>
+    </header>
+
+    <div class="system">
+        <span class="dot"></span>
+        CRYPTO ENGINE ONLINE
+    </div>
+
+    <h1>Generador de<br>contraseñas</h1>
+
+    <p class="subtitle">
+        Derivación criptográfica determinista.
+    </p>
+
+    <label for="seed">MASTER SEED // SEMILLA</label>
+
+    <div class="input-box">
+        <input
+            id="seed"
+            type="password"
+            placeholder="Introduce tu texto secreto..."
+            autocomplete="off"
+        >
+        <button class="eye" onclick="toggleSeed()">◉</button>
+    </div>
+
+    <button class="generate" onclick="generatePassword()">
+        ⟩ GENERAR CONTRASEÑA
+    </button>
+
+    <section class="result" id="result">
+
+        <div class="result-label">
+            ENCRYPTED OUTPUT // PASSWORD
+        </div>
+
+        <div class="password" id="password">
+            ••••••••••••••••••••••••
+        </div>
+
+        <button class="copy" onclick="copyPassword()">
+            ▣ COPIAR AL PORTAPAPELES
+        </button>
+
+        <div class="status" id="status">
+            SYSTEM READY_
+        </div>
+
+    </section>
+
+    <footer class="footer">
+
+        <div class="security">
+            ● LOCAL PROCESSING<br>
+            AES-FREE // PBKDF2
+        </div>
+
+        <button class="sound" id="soundBtn" onclick="toggleSound()">
+            ♪ SOUND: ON
+        </button>
+
+    </footer>
+
+    <div class="note">
+        SEEDPASS // PRIVATE CRYPTOGRAPHIC INTERFACE
+    </div>
+
+</main>
+
+<script>
+
+// =================================
+// AUDIO SYNTH ENGINE
+// =================================
+
+let audioContext;
+let soundEnabled = true;
+
+function initAudio() {
+    if (!audioContext) {
+        audioContext = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+    }
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+}
+
+function tone(freq, duration, type = "sine", volume = 0.04, delay = 0) {
+
+    if (!soundEnabled) return;
+
+    initAudio();
+
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    const start = audioContext.currentTime + delay;
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, start);
+
+    gain.gain.setValueAtTime(0.001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + 0.015);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        start + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.start(start);
+    osc.stop(start + duration + 0.02);
+}
+
+function clickSound() {
+    tone(850, .045, "square", .018);
+}
+
+function generateSound() {
+    tone(420, .12, "sine", .035);
+    tone(650, .15, "triangle", .035, .09);
+    tone(980, .22, "sine", .025, .19);
+}
+
+function copySound() {
+    tone(700, .07, "sine", .035);
+    tone(1100, .15, "sine", .035, .08);
+}
+
+function errorSound() {
+    tone(180, .18, "sawtooth", .025);
+}
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+
+    document.getElementById("soundBtn").textContent =
+        soundEnabled ? "♪ SOUND: ON" : "♪ SOUND: OFF";
+
+    if (soundEnabled) {
+        clickSound();
+    }
+}
+
+// =================================
+// CRYPTOGRAPHIC ENGINE
+// =================================
+
+const alphabet =
+"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+
+async function generatePassword() {
+
+    const seed = document.getElementById("seed").value;
+    const status = document.getElementById("status");
+    const result = document.getElementById("result");
+
+    if (!seed) {
+        status.textContent = "ERROR: MISSING MASTER SEED";
+        errorSound();
+        return;
+    }
+
+    if (!crypto.subtle) {
+        status.textContent = "ERROR: HTTPS REQUIRED";
+        errorSound();
+        return;
+    }
+
+    initAudio();
+    clickSound();
+
+    status.textContent = "DERIVING CRYPTOGRAPHIC KEY...";
+
+    result.classList.remove("scanning");
+    void result.offsetWidth;
+    result.classList.add("scanning");
+
+    try {
+
+        const encoder = new TextEncoder();
+
+        const keyMaterial = await crypto.subtle.importKey(
+            "raw",
+            encoder.encode(seed),
+            "PBKDF2",
+            false,
+            ["deriveBits"]
+        );
+
+        let password = "";
+        let counter = 0;
+
+        while (
+            password.length < 24 ||
+            !/[a-z]/.test(password) ||
+            !/[A-Z]/.test(password) ||
+            !/[0-9]/.test(password) ||
+            !/[^a-zA-Z0-9]/.test(password)
+        ) {
+
+            const bits = await crypto.subtle.deriveBits(
+                {
+                    name: "PBKDF2",
+                    salt: encoder.encode(
+                        "SeedPass-v1-" + counter
+                    ),
+                    iterations: 600000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                512
+            );
+
+            const bytes = new Uint8Array(bits);
+
+            password = "";
+
+            for (const byte of bytes) {
+
+                const limit =
+                    Math.floor(256 / alphabet.length) *
+                    alphabet.length;
+
+                if (byte >= limit) continue;
+
+                password += alphabet[
+                    byte % alphabet.length
+                ];
+
+                if (password.length === 24) break;
+            }
+
+            counter++;
+
+        }
+
+        document.getElementById("password").textContent =
+            password;
+
+        status.textContent = "✓ CRYPTOGRAPHIC OUTPUT GENERATED";
+
+        generateSound();
+
+    } catch (error) {
+
+        status.textContent = "ERROR: CRYPTO ENGINE FAILURE";
+        errorSound();
+
+    }
+}
+
+// =================================
+// INTERFACE
+// =================================
+
+function toggleSeed() {
+
+    const input = document.getElementById("seed");
+
+    input.type =
+        input.type === "password" ? "text" : "password";
+
+    clickSound();
+}
+
+async function copyPassword() {
+
+    const password =
+        document.getElementById("password").textContent;
+
+    if (password.includes("•")) return;
+
+    try {
+
+        await navigator.clipboard.writeText(password);
+
+        document.getElementById("status").textContent =
+            "✓ PASSWORD COPIED SUCCESSFULLY";
+
+        copySound();
+
+    } catch {
+
+        document.getElementById("status").textContent =
+            "ERROR: CLIPBOARD ACCESS DENIED";
+
+        errorSound();
+
+    }
+}
+
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+        if (
+            button.id !== "soundBtn" &&
+            !button.classList.contains("generate") &&
+            !button.classList.contains("copy") &&
+            !button.classList.contains("eye")
+        ) {
+            clickSound();
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
